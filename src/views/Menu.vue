@@ -1,11 +1,13 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
+<template lang="">
+  <div>
+    http://localhost:8081/group/api_php/api_product.php
   </div>
-  <div class="card">
-  <div class="card-header">เมนูแนะนำ</div>
-  <div class="card-body">
-    <p>สลัดผักสดใส่ใจสุขภาพ</p>
-  </div>
-</div>
 </template>
+<script>
+export default {
+  
+}
+</script>
+<style lang="">
+  
+</style>

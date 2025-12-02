@@ -1,171 +1,478 @@
-<template lang="">
-  <div>
-   
-     <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel"> 
-      <div class="carousel-indicators"> 
-       
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button> 
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button> 
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button> 
-      </div> 
-      
-      <div class="carousel-inner"> 
-        <div class="carousel-item">
-          <svg aria-hidden="true" class="bd-placeholder-img" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg> 
-          <div class="container"> 
-            <div class="carousel-caption text-start"> 
-              <h1>Example headline.</h1> 
-              <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> 
-              <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> 
-            </div> 
-          </div> 
-        </div> 
-        
-        <div class="carousel-item">
-          <svg aria-hidden="true" class="bd-placeholder-img" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg> 
-          <div class="container"> 
-            <div class="carousel-caption"> 
-              <h1>Another example headline.</h1> 
-              <p>Some representative placeholder content for the second slide of the carousel.</p> 
-              <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> 
-            </div> 
-          </div> 
-        </div> 
-        
-        <div class="carousel-item active">
-          <svg aria-hidden="true" class="bd-placeholder-img" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg>
-          <div class="container"> 
-            <div class="carousel-caption text-end">
-              <h1>One more for good measure.</h1> 
-              <p>Some representative placeholder content for the third slide of this carousel.</p> 
-              <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p> 
-            </div> 
-          </div> 
-        </div> 
-      </div> 
-      
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
-        <span class="visually-hidden">Previous</span> 
-      </button> 
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next"> 
-        <span class="carousel-control-next-icon" aria-hidden="true"></span> 
-        <span class="visually-hidden">Next</span> 
-      </button> 
-    </div> 
-    
-    <!-- Marketing messaging and featurettes --> 
-    <div class="container marketing"> 
-      <!-- Three columns of text below the carousel -->
-      
-      <div class="container"> 
-         
-        <!-- 1 --> 
-       <div class="col-lg-4"> 
-          <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice" role="img" width="140" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg> 
-          <h2 class="fw-normal">Heading</h2> 
-          <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-          <p><a class="btn btn-secondary" href="#">View details »</a></p> 
-        </div>
-         <!-- 2 --> 
-        <div class="col-lg-4"> 
-          <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice" role="img" width="140" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg> 
-          <h2 class="fw-normal">Heading</h2> 
-          <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-          <p><a class="btn btn-secondary" href="#">View details »</a></p> 
-        </div>
-        
-         <!-- 3 --> 
-        <div class="col-lg-4"> 
-          <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" height="140" preserveAspectRatio="xMidYMid slice" role="img" width="140" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-          </svg> 
-          <h2 class="fw-normal">Heading</h2> 
-          <p>And lastly this, the third column of representative placeholder content.</p> 
-          <p><a class="btn btn-secondary" href="#">View details »</a></p> 
-        </div>
+<template>
+  <div class="home-page">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">The Vegetable</h1>
+        <div class="hero-line"></div>
+        <p class="hero-subtitle">Premium Organic Restaurant</p>
+        <p class="hero-description">สดใหม่ทุกวัน · ออร์แกนิค · รสชาติเข้มข้น</p>
+      </div>
     </div>
-      
-      <!-- START THE FEATURETTES -->
-      <hr class="featurette-divider"> 
-      
-      <div class="row featurette">
-        <div class="col-md-7"> 
-          <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It'll blow your mind.</span></h2> 
-          <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p> 
-        </div> 
-        <div class="col-md-5"> 
-          <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-          </svg> 
-        </div> 
-      </div> 
-      
-      <hr class="featurette-divider">
-      
-      <div class="row featurette"> 
-        <div class="col-md-7 order-md-2"> 
-          <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it's that good. <span class="text-body-secondary">See for yourself.</span></h2> 
-          <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p> 
-        </div> 
-        <div class="col-md-5 order-md-1">
-          <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-          </svg> 
-        </div> 
-      </div> 
-      
-      <hr class="featurette-divider"> 
-      
-      <div class="row featurette">
-        <div class="col-md-7"> 
-          <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span class="text-body-secondary">Checkmate.</span></h2>
-          <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p> 
-        </div> 
-        <div class="col-md-5"> 
-          <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" height="500" preserveAspectRatio="xMidYMid slice" role="img" width="500" xmlns="http://www.w3.org/2000/svg">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-          </svg> 
-        </div> 
-      </div> 
-      
-      <hr class="featurette-divider"> 
-    </div>
-    
-    <!-- FOOTER --> 
-    <footer class="container"> 
-      <p class="float-end"><a href="#">Back to top</a></p>
-      <p>© 2017–2025 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p> 
-    </footer> 
-  </div>
 
+    <div class="container my-5 px-4">
+      <!-- About Section -->
+      <div class="about-section">
+        <h2 class="section-title">เกี่ยวกับเรา</h2>
+        <div class="title-underline"></div>
+        <p class="about-text">
+          <strong>The Vegetable</strong> คือร้านอาหารเพื่อสุขภาพที่เน้นความสดใหม่ของวัตถุดิบ
+          เรานำผักออร์แกนิคคุณภาพสูงมาปรุงเป็นเมนูอาหารแสนอร่อย
+          ด้วยสูตรพิเศษที่ผสมผสานระหว่างรสชาติไทยแท้และความทันสมัย
+          เพื่อสุขภาพที่ดีของคุณและคนที่คุณรัก
+        </p>
+      </div>
+
+      <!-- Popular Menu Section -->
+      <div class="popular-menu-section mt-5">
+        <h2 class="section-title text-center">เมนูยอดนิยม</h2>
+        <div class="title-underline mx-auto"></div>
+
+        <!-- Loading State -->
+        <div v-if="loading" class="text-center py-5">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">กำลังโหลด...</span>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+
+        <!-- Menu Grid -->
+        <div v-else class="row g-4 mt-4">
+          <div
+            v-for="menu in popularMenus"
+            :key="menu.product_id"
+            class="col-lg-4 col-md-6"
+          >
+            <div class="menu-card" @click="handleMenuClick(menu)">
+              <div class="menu-image-wrapper">
+                <img
+                  v-if="menu.image"
+                  :src="getImageUrl(menu.image)"
+                  :alt="menu.product_name"
+                  class="menu-image"
+                />
+                <div v-else class="menu-image-placeholder">
+                  <span class="placeholder-icon">🥗</span>
+                </div>
+              </div>
+              <div class="menu-details">
+                <h3 class="menu-name">{{ menu.product_name }}</h3>
+                <div class="menu-footer">
+                  <span class="menu-price">{{ menu.price }} ฿</span>
+                  <button class="btn-order" @click.stop="handleMenuClick(menu)">
+                    สั่งเลย
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Notice -->
+      <div class="login-notice mt-5">
+        <div class="notice-content">
+          <div class="notice-icon">🔐</div>
+          <div class="notice-text">
+            <h3 class="notice-title">ต้องการสั่งอาหาร?</h3>
+            <p class="notice-description">
+              กรุณาเข้าสู่ระบบก่อนทำการสั่งอาหาร เพื่อประสบการณ์ที่ดีที่สุด
+            </p>
+            <button class="btn-login" @click="goToLogin">
+              เข้าสู่ระบบ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+      <div class="container py-4">
+        <div class="footer-content">
+          <p class="footer-text">📍 เปิดทุกวัน 10:00 - 22:00 น.</p>
+          <p class="footer-text">☎️ โทร: 02-233-5647</p>
+          <p class="footer-copyright">© 2025 The Vegetable - All rights reserved</p>
+        </div>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  
-}
+  name: "RestaurantHome",
+  setup() {
+    const popularMenus = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
+    const isLoggedIn = ref(false); // ตรวจสอบสถานะ Login
+
+    // ✅ ฟังก์ชันดึงข้อมูลเมนูยอดนิยมจากฐานข้อมูล
+    const fetchPopularMenus = async () => {
+      try {
+        // 🔗 ใส่ URL API ของคุณที่นี่
+        const response = await fetch(
+          "http://localhost:8081/group/api_php/show_product.php"
+        );
+        const result = await response.json();
+
+        if (result.success) {
+          // ✅ กรองเฉพาะเมนูยอดนิยม หรือแสดงแค่ 6 รายการแรก
+          popularMenus.value = result.data.slice(0, 6);
+        } else {
+          error.value = result.message || "ไม่สามารถโหลดข้อมูลได้";
+        }
+      } catch (err) {
+        error.value = "เกิดข้อผิดพลาดในการเชื่อมต่อ: " + err.message;
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    // ✅ สร้าง URL รูปภาพ
+    const getImageUrl = (imageName) => {
+      return `http://localhost:8081/group/api_php/uploads/${imageName}`;
+    };
+
+    // ✅ จัดการเมื่อคลิกเมนู
+    const handleMenuClick = (menu) => {
+      if (!isLoggedIn.value) {
+        // ✅ ไปหน้า Login ทันที
+        window.location.href = '/login'; // หรือเปลี่ยนเป็นชื่อ route ที่ใช้จริง
+      } else {
+        alert(`✅ คุณเลือก ${menu.product_name}`);
+        // TODO: เพิ่มฟังก์ชันสั่งอาหาร
+      }
+    };
+
+    // ✅ ไปหน้า Login
+    const goToLogin = () => {
+      // ✅ ไปหน้า Login ทันที
+      window.location.href = '/login'; // หรือเปลี่ยนเป็นชื่อ route ที่ใช้จริง
+    };
+
+    // โหลดข้อมูลเมื่อเริ่มต้น
+    onMounted(() => {
+      fetchPopularMenus();
+    });
+
+    return {
+      popularMenus,
+      loading,
+      error,
+      getImageUrl,
+      handleMenuClick,
+      goToLogin,
+    };
+  },
+};
 </script>
 
-<style lang="">
+<style scoped>
+/* ===== Global Styles ===== */
+.home-page {
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+  position: relative;
+  background: linear-gradient(135deg, #bdc2ba 0%, #749561 50%, #5a9138 100%);
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(106, 169, 127, 0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #310b0b;
+  padding: 40px 20px;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 20px rgba(105, 0, 0, 0.2);
+}
+
+.hero-line {
+  width: 100px;
+  height: 3px;
+  background: #e2e2e2;
+  margin: 0 auto 25px;
+  box-shadow: 0 0 15px rgba(100, 75, 75, 0.5);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.hero-description {
+  font-size: 1rem;
+  font-weight: 300;
+  opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+/* ===== About Section ===== */
+.about-section {
+  background: #e8e8e8;
+  border-radius: 12px;
+  padding: 50px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+  margin-top: 50px;
+  border: 2px solid #000000;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #2d5016;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: #555;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-text strong {
+  color: #2d5016;
+  font-weight: 500;
+}
+
+/* ===== Popular Menu Section ===== */
+.popular-menu-section {
+  margin-top: 80px;
+}
+
+.menu-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  height: 100%;
+}
+
+.menu-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(45, 80, 22, 0.15);
+}
+
+.menu-image-wrapper {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  position: relative;
+}
+
+.menu-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.menu-card:hover .menu-image {
+  transform: scale(1.08);
+}
+
+.menu-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.placeholder-icon {
+  font-size: 5rem;
+  opacity: 0.6;
+}
+
+.menu-details {
+  padding: 25px;
+}
+
+.menu-name {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #2d5016;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.menu-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-price {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #4a7c2c;
+  letter-spacing: 0.5px;
+}
+
+.btn-order {
+  background: linear-gradient(135deg, #4a7c2c 0%, #5a9138 100%);
+  color: #ffffff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(74, 124, 44, 0.2);
+}
+
+.btn-order:hover {
+  background: linear-gradient(135deg, #3d6624 0%, #4a7c2c 100%);
+  box-shadow: 0 6px 20px rgba(74, 124, 44, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ===== Login Notice ===== */
+.login-notice {
+  background: #ffffff;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 35px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.notice-content {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.notice-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.notice-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #2d5016;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.notice-description {
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #4a7c2c 0%, #5a9138 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 25px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(74, 124, 44, 0.25);
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #3d6624 0%, #4a7c2c 100%);
+  box-shadow: 0 6px 20px rgba(74, 124, 44, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #ffffff;
+  color: #2d5016;
+  border-top: 2px solid #f0f0f0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+  color: #555;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  margin-top: 15px;
+  opacity: 0.6;
+  letter-spacing: 0.5px;
+  color: #777;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
   
+  .about-section {
+    padding: 30px 20px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .notice-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 </style>

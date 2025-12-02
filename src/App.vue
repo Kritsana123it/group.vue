@@ -5,15 +5,29 @@
       <div class="container"> 
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"> 
           <router-link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <h3 class="logo-text mb-0">Vegetable</h3>
+            <h3 class="logo-text mb-0">The Vegetable</h3>
           </router-link> 
-          
+  <!-- แสดงเฉพาะเมื่อเข้าสู่ระบบแล้ว -->
+          <template v-if="isLoggedIn">  
+            <li class="nav-item">
+              <router-link class="nav-link" to="/ass">
+                <i class="bi bi-box-seam"></i> office
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link">
+                <i class="bi bi-person-circle"></i> สวัสดี, {{ username }}
+              </span>
+            </li>
+          </template>
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"> 
-            <li><router-link to="/" class="nav-link px-2 text-white">Home</router-link></li>
-            <li><router-link to="/menu" class="nav-link px-2 text-white">Menu</router-link></li>
+      
+           <li><router-link to="/t" class="nav-link px-2 text-white">Menu</router-link></li>
             <li><router-link to="/table" class="nav-link px-2 text-white">Table</router-link></li>
-            <li><router-link to="/reports" class="nav-link px-2 text-white">Reports</router-link></li>
-            <li><router-link to="/user" class="nav-link px-2 text-white">User</router-link></li>
+            <li><router-link to="/listbooking" class="nav-link px-2 text-white">Listtable</router-link></li>
+            <li><router-link to="/ed" class="nav-link px-2 text-white">Menuedit</router-link></li>
+            <li><router-link to="/dash" class="nav-link px-2 text-white">Dashboard</router-link></li>
+           
           </ul> 
           
           
@@ -51,28 +65,24 @@ export default {
       searchQuery: ''
     }
   },
-  methods: {
-    goToLogin() {
-      console.log('✅ LOGIN CLICKED!')
-      alert('Login button works!')
-      this.$router.push('/login').catch(() => {
-        console.log('Login route not setup yet')
-      })
-    },
-    goToSignup() {
-      console.log('✅ SIGNUP CLICKED!')
-      alert('Signup button works!')
-      this.$router.push('/signup').catch(() => {
-        console.log('Signup route not setup yet')
-      })
-    },
-    handleSearch() {
-      console.log('🔍 Searching:', this.searchQuery)
-      if (this.searchQuery.trim()) {
-        alert(`Searching for: ${this.searchQuery}`)
-      }
-    }
+ methods: {
+  goToLogin() {
+    console.log('✅ LOGIN CLICKED!')
+    this.$router.push('/login').catch(() => {
+      console.log('Login route not setup yet')
+    })
   },
+  goToSignup() {
+    console.log('✅ SIGNUP CLICKED!')
+    this.$router.push('/signup').catch(() => {
+      console.log('Signup route not setup yet')
+    })
+  },
+  handleSearch() {
+    console.log('🔍 Searching:', this.searchQuery)
+    // ถ้าอยากลบ alert ตรงนี้ ก็ลบทิ้งได้เช่นกัน
+  }
+},
   mounted() {
     console.log('✅ App mounted successfully')
   }
