@@ -142,7 +142,6 @@ export default {
         name: '',
         phone: ''
       },
-      // ✨ เพิ่มตัวแปรสำหรับเก็บข้อมูลตะกร้า
       cart: [],
       totalPrice: 0,
       orderType: ''
@@ -156,7 +155,6 @@ export default {
       return this.booking.name && this.booking.phone;
     }
   },
-  // ✨ ดึงข้อมูลจาก localStorage เมื่อหน้าโหลด
   mounted() {
     const savedCart = localStorage.getItem('cart');
     const savedTotal = localStorage.getItem('totalPrice');
@@ -185,11 +183,30 @@ export default {
       this.isLoading = true;
 
       try {
-        const response = await fetch('http://localhost:8081/group/api_php/api_tablebooking.php', {
+        const user_id = localStorage.getItem('user_id');
+        
+        if (!user_id) {
+          alert('⚠️ กรุณาเข้าสู่ระบบก่อนจองโต๊ะ');
+          this.isLoading = false;
+          return;
+        }
+        
+        console.log('📤 กำลังบันทึกการจองโต๊ะ:', {
+          user_id,
+          zone: this.booking.zone,
+          guests: this.booking.guests,
+          time: this.booking.time,
+          name: this.booking.name,
+          phone: this.booking.phone
+        });
+
+        // 1️⃣ บันทึกการจองโต๊ะ
+        const bookingResponse = await fetch('http://localhost:8081/group/api_php/api_tablebooking.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             action: 'add',
+            user_id: user_id,
             zone: this.booking.zone,
             guests: this.booking.guests,
             time: this.booking.time,
@@ -199,17 +216,51 @@ export default {
           })
         });
 
-        const result = await response.json();
+        const bookingResult = await bookingResponse.json();
+        console.log('📥 ผลการจองโต๊ะ:', bookingResult);
         
-        if (result.success) {
-          this.showSuccessModal = true;
-          // ✨ ล้างข้อมูล localStorage หลังจองสำเร็จ
-          localStorage.removeItem('cart');
-          localStorage.removeItem('totalPrice');
-          localStorage.removeItem('orderType');
-        } else {
-          alert('❌ เกิดข้อผิดพลาด: ' + (result.error || 'ไม่สามารถบันทึกข้อมูลได้'));
+        if (!bookingResult.success) {
+          alert('❌ เกิดข้อผิดพลาดในการจองโต๊ะ: ' + (bookingResult.error || bookingResult.message));
+          this.isLoading = false;
+          return;
         }
+
+        // 2️⃣ ถ้ามีอาหารในตะกร้า → บันทึกออเดอร์อาหารด้วย
+        if (this.cart.length > 0) {
+          console.log('🍽️ กำลังบันทึกออเดอร์อาหาร:', {
+            user_id,
+            table_no: this.booking.zone,
+            items: this.cart,
+            total: this.totalPrice
+          });
+
+          const orderResponse = await fetch('http://localhost:8081/group/api_php/order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_id: user_id,
+              table_no: this.booking.zone,
+              items: this.cart,
+              total: this.totalPrice
+            })
+          });
+
+          const orderResult = await orderResponse.json();
+          console.log('📥 ผลการสั่งอาหาร:', orderResult);
+
+          if (!orderResult.success) {
+            alert('⚠️ จองโต๊ะสำเร็จ แต่บันทึกออเดอร์อาหารไม่สำเร็จ: ' + orderResult.message);
+          }
+        }
+
+        // 3️⃣ แสดง Modal สำเร็จ
+        this.showSuccessModal = true;
+        
+        // ล้าง localStorage
+        localStorage.removeItem('cart');
+        localStorage.removeItem('totalPrice');
+        localStorage.removeItem('orderType');
+
       } catch (error) {
         alert('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + error.message);
         console.error('Error:', error);
@@ -224,8 +275,9 @@ export default {
       this.booking = { zone: '', guests: '', time: '', name: '', phone: '' };
       this.cart = [];
       this.totalPrice = 0;
-      // ✨ กลับไปหน้าแรกหรือหน้าเมนู
-      // window.location.href = '/'; // ถ้าต้องการกลับหน้าแรก
+      
+      // ✅ ไปหน้า Profile หลังจองสำเร็จ
+      this.$router.push('/cus');
     }
   }
 }
@@ -247,14 +299,12 @@ export default {
   align-items: center;
 }
 
-/* Container ตรงกลาง */
 .container-center {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
 }
 
-/* Header */
 .header-section {
   text-align: center;
   margin-bottom: 30px;
@@ -274,7 +324,6 @@ export default {
   color: #5a7c3e;
 }
 
-/* ✨ Cart Summary Card */
 .cart-summary-card {
   background: linear-gradient(135deg, #fff9e6 0%, #fff4d6 100%);
   border-radius: 20px;
@@ -352,7 +401,6 @@ export default {
   font-size: 24px;
 }
 
-/* Card หลัก - มีกรอบชัดเจน */
 .main-card {
   background: white;
   border-radius: 24px;
@@ -442,7 +490,6 @@ export default {
   font-size: 16px;
 }
 
-/* Buttons */
 .btn-next, .btn-confirm {
   width: 100%;
   background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
@@ -499,7 +546,6 @@ export default {
   margin-top: 0;
 }
 
-/* MODAL */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -585,7 +631,6 @@ export default {
   box-shadow: 0 6px 20px rgba(67, 160, 71, 0.4);
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -607,7 +652,6 @@ export default {
   50% { transform: translateY(-10px); }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .title {
     font-size: 36px;

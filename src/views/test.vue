@@ -42,7 +42,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6" v-for="product in filteredProducts" :key="product.product_id">
         <div class="product-card">
           <div class="product-badge" v-if="product.stock && product.stock > 0">
-            <span class="badge-available">เครื่องล้ม</span>
+            <span class="badge-available">พร้อมจำหน่าย</span>
           </div>
           <div class="stock-badge">
             คลัง: {{ product.stock || 100 }}
@@ -135,6 +135,7 @@
               <h6 class="option-title">ทานที่ร้าน</h6>
               <p class="option-description">จองโต๊ะและรับประทานที่ร้าน</p>
             </div>
+            
           </div>
         </div>
       </div>
@@ -157,7 +158,6 @@ export default {
     const sortBy = ref("");
     const showOrderTypeModal = ref(false);
 
-    // ตัวเลือกประเภทอาหาร
     const categories = [
       { value: "all", label: "ทั้งหมด", icon: "🏠" },
       { value: 1, label: "อาหาร", icon: "🍜" },
@@ -165,7 +165,6 @@ export default {
       { value: 3, label: "ของหวาน", icon: "🍰" },
     ];
 
-    // ✅ ดึงข้อมูลสินค้า
     const fetchProducts = async () => {
       try {
         const response = await fetch(
@@ -184,18 +183,15 @@ export default {
       }
     };
 
-    // ✨ กรองสินค้าตามประเภท, ค้นหา, และเรียงลำดับ
     const filteredProducts = computed(() => {
       let result = products.value;
 
-      // กรองตามประเภท
       if (selectedCategory.value !== "all") {
         result = result.filter(
           (product) => product.type_id === selectedCategory.value
         );
       }
 
-      // ค้นหา
       if (searchQuery.value.trim()) {
         const query = searchQuery.value.toLowerCase();
         result = result.filter((product) =>
@@ -203,7 +199,6 @@ export default {
         );
       }
 
-      // เรียงลำดับ
       if (sortBy.value === "price-low") {
         result = [...result].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
       } else if (sortBy.value === "price-high") {
@@ -217,7 +212,6 @@ export default {
       return result;
     });
 
-    // ✅ เพิ่มสินค้าเข้าตะกร้า
     const addToCart = (product) => {
       const existing = cart.value.find(
         (item) => item.product_id === product.product_id
@@ -237,12 +231,10 @@ export default {
       alert(`✅ เพิ่ม "${product.product_name}" ลงในตะกร้าสำเร็จ!`);
     };
 
-    // ✅ เพิ่มจำนวนสินค้า
     const increaseQty = (item) => {
       item.quantity++;
     };
 
-    // ✅ ลดจำนวนสินค้า
     const decreaseQty = (item) => {
       if (item.quantity > 1) {
         item.quantity--;
@@ -254,19 +246,16 @@ export default {
       }
     };
 
-    // ✅ ลบสินค้าออกจากตะกร้า
     const removeFromCart = (index) => {
       if (confirm("ยืนยันการลบสินค้านี้หรือไม่?")) {
         cart.value.splice(index, 1);
       }
     };
 
-    // ✅ คำนวณราคารวมทั้งหมด
     const totalPrice = computed(() =>
       cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
     );
 
-    // ✨ เลือกประเภทการสั่ง
     const selectOrderType = (type) => {
       if (type === "takeaway") {
         showOrderTypeModal.value = false;
@@ -277,22 +266,61 @@ export default {
       }
     };
 
-    // ✅ ไปหน้าชำระเงิน (สำหรับสั่งกลับบ้าน)
-    const proceedToPayment = () => {
-      const orderData = {
-        order_type: "takeaway",
-        items: cart.value,
-        total: totalPrice.value,
-      };
+    // ✅ บันทึกออเดอร์สำหรับสั่งกลับบ้าน
+    const proceedToPayment = async () => {
+      const user_id = localStorage.getItem('user_id');
+      
+      if (!user_id) {
+        alert('⚠️ กรุณาเข้าสู่ระบบก่อนสั่งซื้อ');
+        return;
+      }
 
-      localStorage.setItem('cart', JSON.stringify(cart.value));
-      localStorage.setItem('totalPrice', totalPrice.value.toString());
-      localStorage.setItem('orderType', 'takeaway');
-      
-      console.log("Order Data (Takeaway):", orderData);
-      
-      alert(`✅ สั่งกลับบ้าน\nยอดรวม: ${totalPrice.value.toFixed(2)} บาท\n\nกำลังไปหน้าชำระเงิน...`);
-      // window.location.href = '/payment';
+      if (cart.value.length === 0) {
+        alert('⚠️ กรุณาเพิ่มสินค้าลงตะกร้าก่อน');
+        return;
+      }
+
+      console.log('📤 กำลังส่งออเดอร์ Takeaway:', {
+        user_id,
+        table_no: 'Takeaway',
+        items: cart.value,
+        total: totalPrice.value
+      });
+
+      try {
+        const response = await fetch('http://localhost:8081/group/api_php/order.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            user_id: user_id,
+            table_no: 'Takeaway',
+            items: cart.value,
+            total: totalPrice.value
+          })
+        });
+
+        const result = await response.json();
+        
+        console.log('📥 ผลลัพธ์ Takeaway:', result);
+        
+        if (result.success) {
+          alert(`✅ สั่งกลับบ้านสำเร็จ!\nยอดรวม: ฿${totalPrice.value.toFixed(2)}\n\nกรุณารับสินค้าที่หน้าร้าน`);
+          
+          // ล้างตะกร้า
+          cart.value = [];
+          
+          // รอ 1 วินาที แล้วไปหน้า Profile
+          setTimeout(() => {
+           location.reload();
+
+          }, 1000);
+        } else {
+          alert('❌ เกิดข้อผิดพลาด: ' + (result.message || 'ไม่สามารถบันทึกได้'));
+        }
+      } catch (error) {
+        alert('❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + error.message);
+        console.error('Error:', error);
+      }
     };
 
     // ✅ ไปหน้าจองโต๊ะ (สำหรับทานที่ร้าน)
@@ -304,7 +332,6 @@ export default {
       window.location.href = '/table';
     };
 
-    // ✅ จัดการรูปภาพที่โหลดไม่ได้
     const handleImageError = (e) => {
       e.target.src = 'https://via.placeholder.com/300x200/2d5016/ffffff?text=No+Image';
     };
@@ -335,12 +362,11 @@ export default {
 </script>
 
 <style scoped>
-/* 🎨 Global Styles */
+/* เหมือนเดิมทุกอย่าง - ไม่ต้องแก้ CSS */
 * {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🔍 Search Box */
 .search-box input {
   border-radius: 50px;
   border: 2px solid #e8f5e9;
@@ -370,7 +396,6 @@ export default {
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
 }
 
-/* 🏷️ Category Pills */
 .category-pills {
   display: flex;
   gap: 12px;
@@ -403,7 +428,6 @@ export default {
   box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
 }
 
-/* 🛍️ Product Card */
 .product-card {
   background: white;
   border-radius: 20px;
@@ -534,7 +558,6 @@ export default {
   box-shadow: 0 6px 16px rgba(45, 80, 22, 0.4);
 }
 
-/* 🛒 Cart Section */
 .cart-section {
   background: white;
   border-radius: 20px;
@@ -732,7 +755,6 @@ export default {
   color: #9e9e9e;
 }
 
-/* 🎭 Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -849,7 +871,6 @@ export default {
   margin: 0;
 }
 
-/* 📱 Responsive */
 @media (max-width: 768px) {
   .category-pills {
     justify-content: flex-start;
@@ -857,6 +878,10 @@ export default {
     flex-wrap: nowrap;   
     -webkit-overflow-scrolling: touch;
     gap: 10px;
+  }
+  
+  .order-type-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

@@ -64,9 +64,6 @@
                 <h3 class="menu-name">{{ menu.product_name }}</h3>
                 <div class="menu-footer">
                   <span class="menu-price">{{ menu.price }} ฿</span>
-                  <button class="btn-order" @click.stop="handleMenuClick">
-                    สั่งเลย
-                  </button>
                 </div>
               </div>
             </div>
@@ -74,20 +71,8 @@
         </div>
       </div>
 
-      <!-- Login Notice (แสดงเฉพาะตอนยังไม่ Login) -->
-      <div v-if="!isLoggedIn" class="login-notice mt-5">
-        <div class="notice-content">
-          <div class="notice-icon">🔐</div>
-          <div class="notice-text">
-            <h3 class="notice-title">ต้องการสั่งอาหาร?</h3>
-            <p class="notice-description">
-              กรุณาเข้าสู่ระบบก่อนทำการสั่งอาหาร เพื่อประสบการณ์ที่ดีที่สุด
-            </p>
-            <button class="btn-login" @click="goToLogin">
-              เข้าสู่ระบบ
-            </button>
-          </div>
-        </div>
+     
+       
       </div>
     </div>
 
@@ -101,7 +86,6 @@
         </div>
       </div>
     </footer>
-  </div>
 </template>
 
 <script>

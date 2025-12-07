@@ -7,10 +7,30 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+   {
+    path: '/h',
+    name: 'h',
+    component: () => import('../views/homeadmin.vue')
+  },
   {
     path: '/t',
     name: 'test',
     component: () => import('../views/test.vue')
+  },
+   {
+    path: '/menu',
+    name: 'menu',
+    component: () => import('../views/menuadmin.vue')
+  },
+  {
+    path: '/cus',
+    name: 'cus',
+    component: () => import('../views/customer.vue')
+  },
+  {
+    path: '/em',
+    name: 'em',
+    component: () => import('../views/employee.vue')
   },
   {
     path: '/table',
@@ -23,15 +43,15 @@ const routes = [
     component: () => import('../views/User.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: () => import('../views/Signup.vue')
-  },
+  path: '/login',
+  name: 'Login',
+  component: () => import('../views/Login.vue')
+},
+{
+  path: '/signup',
+  redirect: '/login'  // เมื่อกด Sign-up จะไปหน้า Login แทน
+},
+  
   {
     path: '/ed',
     name: 'editmenu',

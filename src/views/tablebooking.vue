@@ -115,14 +115,14 @@
                 @click="openEditModal(booking)"
                 title="แก้ไข"
               >
-                <i class="bi bi-pencil-square"></i>
+                <i class="bi bi-pencil-square">แก้ไข</i>
               </button>
               <button 
                 class="btn btn-sm btn-danger" 
                 @click="deleteBooking(booking.booking_id)"
                 title="ลบ"
               >
-                <i class="bi bi-trash3"></i>
+                <i class="bi bi-trash3">ลบ</i>
               </button>
             </td>
           </tr>
