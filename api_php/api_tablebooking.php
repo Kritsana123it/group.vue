@@ -1,5 +1,4 @@
 <?php
-// ปิด error แสดงใน output แต่ยังบันทึก log
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
@@ -9,7 +8,6 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=utf-8");
 
-// Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit(0);
@@ -19,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // การเชื่อมต่อฐานข้อมูล
 // ========================================
 $host = 'localhost';
-$dbname = 'mk_shop';
+$dbname = 'shop';
 $username = 'root';
 $password = '';
 
@@ -44,10 +42,56 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $action = $_GET['action'] ?? 'list';
     
-    // 📊 Dashboard - ดึงข้อมูลสถิติสำหรับแดชบอร์ด
-    if ($action === 'dashboard') {
+    // 👤 Customer History - ดึงประวัติการจองของลูกค้าแต่ละคน
+    if ($action === 'customer_history') {
+        $user_id = $_GET['user_id'] ?? null;
+
+        if (!$user_id) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'ไม่พบ user_id'
+            ], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
         try {
-            // จำนวนการจองวันนี้
+            $stmt = $pdo->prepare("
+                SELECT 
+                    booking_id,
+                    zone as table_number,
+                    guests,
+                    time as booking_time,
+                    booking_date,
+                    status,
+                    customer_name,
+                    phone,
+                    created_at
+                FROM bookings 
+                WHERE user_id = :user_id 
+                ORDER BY created_at DESC
+            ");
+            
+            $stmt->execute([':user_id' => $user_id]);
+            $bookings = $stmt->fetchAll();
+            
+            echo json_encode([
+                'success' => true, 
+                'bookings' => $bookings
+            ], JSON_UNESCAPED_UNICODE);
+            exit();
+            
+        } catch(PDOException $e) {
+            echo json_encode([
+                'success' => false, 
+                'error' => $e->getMessage()
+            ], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+    }
+    
+    // 📊 Dashboard - ดึงข้อมูลสถิติสำหรับแดชบอร์ด
+    elseif ($action === 'dashboard') {
+        try {
             $stmt = $pdo->query("
                 SELECT COUNT(*) as total 
                 FROM bookings 
@@ -56,7 +100,6 @@ if ($method === 'GET') {
             $result = $stmt->fetch();
             $todayBookings = $result ? (int)$result['total'] : 0;
             
-            // จำนวนการจองที่รอยืนยัน
             $stmt = $pdo->query("
                 SELECT COUNT(*) as total 
                 FROM bookings 
@@ -65,7 +108,6 @@ if ($method === 'GET') {
             $result = $stmt->fetch();
             $pendingBookings = $result ? (int)$result['total'] : 0;
             
-            // รายการจองล่าสุด 20 รายการ
             $stmt = $pdo->query("
                 SELECT * FROM bookings 
                 ORDER BY created_at DESC 
@@ -73,7 +115,6 @@ if ($method === 'GET') {
             ");
             $recentBookings = $stmt->fetchAll();
             
-            // โซนที่ถูกจองมากที่สุด (7 วันย้อนหลัง)
             $stmt = $pdo->query("
                 SELECT zone, COUNT(*) as booking_count 
                 FROM bookings 
@@ -102,7 +143,7 @@ if ($method === 'GET') {
         }
     }
     
-    // 📋 List - ดึงรายการจองทั้งหมด
+    // 📋 List - ดึงรายการจองทั้งหมด (สำหรับ Admin)
     elseif ($action === 'list') {
         try {
             $stmt = $pdo->query("SELECT * FROM bookings ORDER BY created_at DESC");
@@ -136,7 +177,6 @@ if ($method === 'GET') {
             $stmt->execute();
             $results = $stmt->fetchAll();
             
-            // แปลงเป็นรูปแบบ key-value
             $availability = [];
             foreach ($results as $row) {
                 $key = $row['zone'] . '_' . $row['time'];
@@ -188,11 +228,12 @@ elseif ($method === 'POST') {
     if ($action === 'add') {
         try {
             $stmt = $pdo->prepare("
-                INSERT INTO bookings (zone, guests, time, customer_name, phone, booking_date, status, created_at) 
-                VALUES (:zone, :guests, :time, :customer_name, :phone, :booking_date, 'รอยืนยัน', NOW())
+                INSERT INTO bookings (user_id, zone, guests, time, customer_name, phone, booking_date, status, created_at) 
+                VALUES (:user_id, :zone, :guests, :time, :customer_name, :phone, :booking_date, 'รอยืนยัน', NOW())
             ");
             
             $stmt->execute([
+                ':user_id' => $data['user_id'] ?? null,
                 ':zone' => $data['zone'] ?? '',
                 ':guests' => $data['guests'] ?? 0,
                 ':time' => $data['time'] ?? '',
@@ -317,9 +358,6 @@ elseif ($method === 'POST') {
     }
 }
 
-// ========================================
-// Method ไม่รองรับ
-// ========================================
 else {
     echo json_encode([
         'success' => false, 
