@@ -163,6 +163,8 @@ export default {
       { value: 1, label: "อาหาร", icon: "🍜" },
       { value: 2, label: "เครื่องดื่ม", icon: "🥤" },
       { value: 3, label: "ของหวาน", icon: "🍰" },
+      { value: 3, label: "ของหวาน", icon: "🍰" },
+
     ];
 
     const fetchProducts = async () => {
@@ -884,4 +886,5 @@ export default {
     grid-template-columns: 1fr;
   }
 }
+
 </style>
